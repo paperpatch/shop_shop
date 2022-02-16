@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import { QUERY_PRODUCTS } from '../utils/queries';
-import spinner from '../assets/spinner.gif';
-
 import { useStoreContext } from '../utils/GlobalState';
 import { UPDATE_PRODUCTS } from '../utils/actions';
+import { QUERY_PRODUCTS } from '../utils/queries';
+import spinner from '../assets/spinner.gif';
 
 function Detail() {
   const [state, dispatch] = useStoreContext();
   const { id } = useParams();
 
-  const [currentProduct, setCurrentProduct] = useState({})
+  const [currentProduct, setCurrentProduct] = useState({});
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
@@ -20,11 +19,11 @@ function Detail() {
 
   useEffect(() => {
     if (products.length) {
-      setCurrentProduct(products.find(product => product._id === id));
+      setCurrentProduct(products.find((product) => product._id === id));
     } else if (data) {
       dispatch({
         type: UPDATE_PRODUCTS,
-        products: data.products
+        products: data.products,
       });
     }
   }, [products, data, dispatch, id]);
